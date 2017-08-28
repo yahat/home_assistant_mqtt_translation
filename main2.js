@@ -1,7 +1,10 @@
-var TargetMqtt = 'mqt://127.0.0.1';
+var TargetMqtt = 'mqt://<target>';
+var TargetPrefix = 'target/prefix';
+
 var HassUpdaterOptions = {
-    'host'             : '<remote-hass-ip>'
+     'host'             : '<localmqtt>'
     ,'connection'       : 'homeassistant/connection'
+    ,'eventstream'      : 'homeassistant/eventstream'
 };
 
 const HassStateUpdater = require('./lib/HassStateUpdater.js');
@@ -34,7 +37,7 @@ Hass.events.on('ConnectionStatus',function(status){
 
 function DeviceIdExists(id){
     if(typeof(Devices[id])=='undefined'){
-        Devices[id] = new HassRemoteDevice(id,TargetMqtt);
+        Devices[id] = new HassRemoteDevice(id,TargetMqtt,TargetPrefix);
     }
 }
 function ProcessStart(id){
